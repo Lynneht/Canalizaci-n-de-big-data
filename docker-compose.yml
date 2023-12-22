@@ -1,0 +1,51 @@
+version: '3.8'
+
+services:
+
+  #scrapper:
+
+  metabase:
+    image: metabase/metabase
+    conainer_name: metabase
+    ports:
+      -3000:3000
+    networks:
+      -pipeline_network
+    restart: always
+
+ notenook:
+   image: quay.io/jupyter/datascience-notebook:2023-11-17
+   container_name: jupyter
+   ports:
+     -8888:8888
+   volumes:
+     -./notebook:/home/jovyan/work
+   restart: always
+
+ database:
+   image: mysql:8.2.0
+   container_name: mysql
+   ports:
+     -3306
+   environment:
+     -MYSQL_ROOT_PASSWORD=root
+     -MYSQL_DATABASE=rick
+   networks:
+     -pipeline_network
+   restart: always
+
+ editor:
+   image: adminer
+   container_name: adminer
+   ports:
+     -8080:8080
+   envvironment:
+     ADMINER_DESIGN: hydra
+   networks:
+     -pipeline_network
+   restart: always
+
+ networks:
+   pipeline_network:
+     name: 'pipeline_network'
+     
