@@ -1,2 +1,2 @@
-# Canalizaci-n-de-big-data
+# Canalizacion de big data
 Jupiter Notebook
